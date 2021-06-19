@@ -9,6 +9,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT;
+const path = '/galeria';
 
 
 /* ------------------------------ NIDDLEWEARES ------------------------------ */
@@ -21,6 +22,9 @@ app.use(express.json());
 
 /*=========DIRECTORIO==========*/
 app.use(express.static('public'));
+
+/* --------------------------------- ROUTES --------------------------------- */
+app.use(path, require('./routes/galeria.route'));
 
 
 /* ------------------------------- SERVIDOR ON ------------------------------ */
