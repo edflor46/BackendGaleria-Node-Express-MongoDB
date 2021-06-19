@@ -13,8 +13,10 @@ class Server {
         /*==========PORT==========*/
         this.port = process.env.PORT;
 
-        /*==========PATH==========*/
-        this.path = '/galeria';
+        /*==========PATHS==========*/
+        this.path = {
+            usuarios: '/usuarios/'
+        }
 
         /*==========CONECTARDB==========*/
         this.conectarDB();
@@ -49,7 +51,7 @@ class Server {
     /*                                   ROUTES                                   */
     /* -------------------------------------------------------------------------- */
     routes() {
-        this.app.use(this.path, require('../routes/galeria.route'));
+        this.app.use(this.path.usuarios, require('../routes/usuarios.route'));
     }
     /* -------------------------------------------------------------------------- */
     /*                                   LISTEN                                   */
@@ -58,10 +60,7 @@ class Server {
         this.app.listen(this.port, () => {
             console.log('\n\nServidor corriendo el en puerto'.magenta, this.port.cyan);
         });
-
     }
-
-
 }
 
 module.exports = Server;
