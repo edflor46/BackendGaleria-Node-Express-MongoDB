@@ -25,11 +25,16 @@ const usaurioSchema = Schema({
         type: String,
         require: true,
         default: 'USER_ROLE',
-        emun: ['ADMIN_ROLE', 'USER_ROLE']
+        emun: ['USER_ROLE', 'ADMIN_ROLE']
     },
 
     img_perfil: {
         type: String,
+    },
+
+    estado: {
+        type: Boolean,
+        default: true,
     },
 
     google: {

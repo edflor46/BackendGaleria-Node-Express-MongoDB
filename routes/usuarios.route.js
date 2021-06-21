@@ -1,6 +1,9 @@
 /*==========IMPORTS==========*/
 const {Router} = require('express');
+const { check } = require('express-validator');
 const { getAllUsers, getUser, createUser, updateUser, deleteUser } = require('../controllers/usuarios.controller');
+const { rolValido } = require('../helpers/db-validator');
+const { validarCampos } = require('../middleweares/validar-campos');
 
 const router = Router();
 
@@ -17,7 +20,13 @@ router.get('/:id', getUser);
 /* -------------------------------------------------------------------------- */
 /*                                 CREATE USER                                */
 /* -------------------------------------------------------------------------- */
-router.post('/create-user', createUser);
+router.post('/create-user', [
+    check('nombre', 'El nombre es obligatoria').not().isEmpty(),
+    check('correo', 'Ingrese un correo valido').isEmail(),
+    check('password', 'La contraseña debe tener al menos 6 caracteres').isLength({min:6}),
+    // check('rol').custom(rolValido),
+    validarCampos
+],createUser);
 
 /* -------------------------------------------------------------------------- */
 /*                                 UPDATE USER                                */
