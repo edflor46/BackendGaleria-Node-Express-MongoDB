@@ -24,8 +24,8 @@ const usaurioSchema = Schema({
     rol: {
         type: String,
         require: true,
-        default: 'USER_ROLE',
-        emun: ['USER_ROLE', 'ADMIN_ROLE']
+        default: 'USUARIO',
+        emun: ['USUARIO', 'MODERADOR']
     },
 
     img_perfil: {

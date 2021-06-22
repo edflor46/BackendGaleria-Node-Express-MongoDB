@@ -1,3 +1,4 @@
+const Usuario = require('../models/usuarios.model');
 
 /* -------------------------------------------------------------------------- */
 /*                                GET ALL USERS                               */
@@ -18,8 +19,18 @@ const getUser= (req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                                 CREATE USER                                */
 /* -------------------------------------------------------------------------- */
-const createUser = (req, res) => {
-    console.log('Create user');
+const createUser = async(req, res) => {
+
+    /*==========DATA USER=========*/
+    const {nombre, correo, password, rol } = req.body;
+    
+    /*==========USER MODEL=========*/
+    const user = new Usuario({nombre, correo, password, rol});
+    
+    
+    /*==========SAVE DATABASE=========*/
+    // await user.save();
+    console.log(user);
     res.json({ msg: 'Create user' });
 }
 
