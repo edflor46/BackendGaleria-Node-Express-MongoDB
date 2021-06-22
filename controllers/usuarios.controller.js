@@ -1,4 +1,5 @@
 const Usuario = require('../models/usuarios.model');
+const bcrypt = require('bcrypt');
 
 /* -------------------------------------------------------------------------- */
 /*                                GET ALL USERS                               */
@@ -27,11 +28,15 @@ const createUser = async(req, res) => {
     /*==========USER MODEL=========*/
     const user = new Usuario({nombre, correo, password, rol});
     
+    /*==========BCRYPT PASSWORD=========*/
+    const crypt = bcrypt.genSaltSync();
+    user.password = bcrypt.hashSync(password, crypt);
     
     /*==========SAVE DATABASE=========*/
-    // await user.save();
-    console.log(user);
-    res.json({ msg: 'Create user' });
+    await user.save();
+    
+    /*==========RESPONSE=========*/
+    res.json(user);
 }
 
 /* -------------------------------------------------------------------------- */
