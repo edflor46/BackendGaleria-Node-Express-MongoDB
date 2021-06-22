@@ -27,7 +27,21 @@ const emailExist = async(correo) => {
     }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                  VALID ID                                  */
+/* -------------------------------------------------------------------------- */
+
+const idValid = async(id) => {
+    /*==========Buscar id en la base de datos==========*/
+    const idUserDB = await Usuario.findById(id);
+    
+    /*==========Si hay resultado lanzar error==========*/
+    if (!idUserDB) {
+        throw new Error(`El id: ${id} no existe`);
+    }
+}
 module.exports = {
     rolValido,
-    emailExist
+    emailExist,
+    idValid
 }

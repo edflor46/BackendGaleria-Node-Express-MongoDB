@@ -1,7 +1,6 @@
 const Usuario = require('../models/usuarios.model');
 const bcrypt = require('bcrypt');
 const { generarJWT } = require('../helpers/generarJWT');
-const { json } = require('express');
 
 /* -------------------------------------------------------------------------- */
 /*                                    LOGIN                                   */
@@ -55,9 +54,6 @@ const login = async (req, res) => {
             msg: 'Error al validar los datos'
         })
     }
-
-
-    res.json({ msg: 'Login' })
 }
 
 

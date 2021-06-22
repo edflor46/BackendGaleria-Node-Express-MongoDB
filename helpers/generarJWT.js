@@ -1,11 +1,15 @@
+/*=========iMPORTS==========*/
 const jwt = require('jsonwebtoken');
 require('colors');
 
+/* -------------------------------------------------------------------------- */
+/*                                GENERATE JWT                                */
+/* -------------------------------------------------------------------------- */
 const generarJWT = (uid) => {
 
-    /*==========RETURN PROMUSE==========*/
+    /*==========RETURN PROMISE==========*/
     return new Promise((resolve, reject) => {
-        
+
         /*==========SIGN TOKEN==========*/
         const payload = { uid };
         jwt.sign(payload, process.env.KEY, {
