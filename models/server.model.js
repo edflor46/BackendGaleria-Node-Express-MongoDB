@@ -14,8 +14,9 @@ class Server {
         this.port = process.env.PORT;
 
         /*==========PATHS==========*/
-        this.path = {
-            usuarios: '/usuarios/'
+        this.paths = {
+            usuarios: '/usuarios/',
+            login: '/login'
         }
 
         /*==========CONECTARDB==========*/
@@ -51,7 +52,8 @@ class Server {
     /*                                   ROUTES                                   */
     /* -------------------------------------------------------------------------- */
     routes() {
-        this.app.use(this.path.usuarios, require('../routes/usuarios.route'));
+        this.app.use(this.paths.usuarios , require('../routes/usuarios.route'));
+        this.app.use(this.paths.login    , require('../routes/auth.route'));
     }
     /* -------------------------------------------------------------------------- */
     /*                                   LISTEN                                   */
