@@ -12,7 +12,7 @@ const getAllUsers = (req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                                  GET USER                                  */
 /* -------------------------------------------------------------------------- */
-const getUser= (req, res) => {
+const getUser = (req, res) => {
     console.log('Get  USER');
     res.json({ msg: 'GET  USER' });
 }
@@ -20,21 +20,21 @@ const getUser= (req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                                 CREATE USER                                */
 /* -------------------------------------------------------------------------- */
-const createUser = async(req, res) => {
+const createUser = async (req, res) => {
 
     /*==========DATA USER=========*/
-    const {nombre, correo, password, rol } = req.body;
-    
+    const { nombre, correo, password, rol } = req.body;
+
     /*==========USER MODEL=========*/
-    const user = new Usuario({nombre, correo, password, rol});
-    
+    const user = new Usuario({ nombre, correo, password, rol });
+
     /*==========BCRYPT PASSWORD=========*/
     const crypt = bcrypt.genSaltSync();
     user.password = bcrypt.hashSync(password, crypt);
-    
+
     /*==========SAVE DATABASE=========*/
     await user.save();
-    
+
     /*==========RESPONSE=========*/
     res.json(user);
 }
@@ -42,9 +42,25 @@ const createUser = async(req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                                 UPDATE USER                                */
 /* -------------------------------------------------------------------------- */
-const updateUser = (req, res) => {
-    console.log('Update user');
-    res.json({ msg: 'Update user' });
+const updateUser = async (req, res) => {
+    /*==========ID USER==========*/
+    const { id } = req.params;
+    /*=========DESESTRUCTURING OBJECT===========*/
+    const { _id, password, google, correo, ...data } = req.body;
+
+    /*=========DB VALIDATE=========*/
+    if (password) {
+
+        /*=========CRYPT PASSWORD=========*/
+        const salt = bcrypt.genSaltSync();
+        data.password = bcrypt.hashSync(password, salt);
+    }
+
+    /*==========UPDATE USER==========*/
+    user = await Usuario.findByIdAndUpdate(id, data);
+
+    /*==========RESPONSE==========*/
+    res.json(user);
 }
 
 /* -------------------------------------------------------------------------- */
