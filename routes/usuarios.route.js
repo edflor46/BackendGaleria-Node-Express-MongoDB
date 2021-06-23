@@ -45,7 +45,13 @@ router.put('/update-user/:id', [
 /* -------------------------------------------------------------------------- */
 /*                                 DELETE USER                                */
 /* -------------------------------------------------------------------------- */
-router.put('/delete-user/:id', deleteUser);
+router.put('/delete-user/:id', [
+    validJWT,
+    rolPrivilege('ADMINISTRADOR', 'MODERADOR'),
+    check('id', 'No es un id valido').isMongoId(),
+    check('id').custom(idValid),
+    validarCampos
+],deleteUser);
 
 
 module.exports = router;

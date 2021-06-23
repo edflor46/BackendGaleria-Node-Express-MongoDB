@@ -66,9 +66,13 @@ const updateUser = async (req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                                 DELETE USER                                */
 /* -------------------------------------------------------------------------- */
-const deleteUser = (req, res) => {
-    console.log('Delete user');
-    res.json({ msg: 'Delete user' });
+const deleteUser = async (req, res) => {
+    /*==========ID PARAMS==========*/
+    const { id } = req.params;
+
+    /*==========FIND AND DELETE==========*/
+    const user = await Usuario.findByIdAndUpdate(id, { estado: false });
+    res.json(user);
 }
 
 module.exports = {
