@@ -17,7 +17,13 @@ router.get('/', getAllUsers);
 /* -------------------------------------------------------------------------- */
 /*                                  GET USER                                  */
 /* -------------------------------------------------------------------------- */
-router.get('/:id', getUser);
+router.get('/:id', [
+    validJWT,
+    check('id', 'No es un id valido').isMongoId(),
+    check('id').custom(idValid),
+    validarCampos
+],
+getUser);
 
 /* -------------------------------------------------------------------------- */
 /*                                 CREATE USER                                */

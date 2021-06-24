@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 const getAllUsers = async (req, res) => {
     /*==========REQ QUERY==========*/
     const { limit = 2, page = 1 } = req.query;
-    
+
     /*========CUSTOMIZE LABELS========*/
     const labels = {
         totalDocs: 'total_users',
@@ -25,20 +25,26 @@ const getAllUsers = async (req, res) => {
     const options = {
         page,
         limit,
-        sort: {_id: -1},
+        sort: { _id: -1 },
         customLabels: labels
     }
 
-    const users = await Usuario.paginate({},options);
+    const users = await Usuario.paginate({}, options);
     res.json(users);
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                  GET USER                                  */
 /* -------------------------------------------------------------------------- */
-const getUser = (req, res) => {
-    console.log('Get  USER');
-    res.json({ msg: 'GET  USER' });
+const getUser = async (req, res) => {
+    /*========REQ PARAMS========*/
+    const { id } = req.params;
+
+    /*========SEARCH FOR ID========*/
+    const user = await Usuario.findById(id);
+
+    /*========RES========*/
+    res.json(user);
 }
 
 /* -------------------------------------------------------------------------- */
