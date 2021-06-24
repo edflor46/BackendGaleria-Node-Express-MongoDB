@@ -1,14 +1,15 @@
 /* -------------------------------------------------------------------------- */
 /*                              MODELO DB USUARIO                             */
 /* -------------------------------------------------------------------------- */
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const usaurioSchema = Schema({
 
     nombre: {
         type: String,
-        require:[true, 'El nombre es obligatorio']
+        require: [true, 'El nombre es obligatorio']
     },
 
     correo: {
@@ -20,7 +21,7 @@ const usaurioSchema = Schema({
         type: String,
         require: [true, 'La contraseña es obligatoria']
     },
-    
+
     rol: {
         type: String,
         require: true,
@@ -40,11 +41,20 @@ const usaurioSchema = Schema({
     google: {
         type: Boolean,
         default: false
+    },
+
+    fecha: {
+        type: Date,
+        default: Date.now
     }
 });
 
-usaurioSchema.methods.toJSON = function(){
-    const {__v, password, _id, ...usuario} = this.toObject();
+/*==========PAGINATE==========*/
+usaurioSchema.plugin(mongoosePaginate);
+
+/*==========PROCESS DATA==========*/
+usaurioSchema.methods.toJSON = function () {
+    const { __v, password, _id, ...usuario } = this.toObject();
     usuario.uid = _id;
     return usuario;
 }

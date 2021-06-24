@@ -1,12 +1,36 @@
 const Usuario = require('../models/usuarios.model');
 const bcrypt = require('bcrypt');
 
+
 /* -------------------------------------------------------------------------- */
 /*                                GET ALL USERS                               */
 /* -------------------------------------------------------------------------- */
-const getAllUsers = (req, res) => {
-    console.log('Get ALL USERS');
-    res.json({ msg: 'GET ALL USERS' });
+const getAllUsers = async (req, res) => {
+    /*==========REQ QUERY==========*/
+    const { limit = 2, page = 1 } = req.query;
+    
+    /*========CUSTOMIZE LABELS========*/
+    const labels = {
+        totalDocs: 'total_users',
+        docs: 'users',
+        limit: 'perPage',
+        page: 'currentPage',
+        nextPage: 'next',
+        prevPage: 'prev',
+        totalPages: 'pageCount',
+        pagingCounter: 'slNo',
+        meta: 'paginate',
+    }
+    /*========OPTIONS========*/
+    const options = {
+        page,
+        limit,
+        sort: {_id: -1},
+        customLabels: labels
+    }
+
+    const users = await Usuario.paginate({},options);
+    res.json(users);
 }
 
 /* -------------------------------------------------------------------------- */
